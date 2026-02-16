@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mystery Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #1e1e2f, #2a2a40);
+      color: white;
+      text-align: center;
+      padding: 20px;
+      margin: 0;
+      min-height: 100vh;
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      font-size: 1.8rem;
+    }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  z-index: 2;
+  position: relative; 
+}
+
+.buttons button {
+  flex: 1 1 40%;
+  max-width: 160px;
+  padding: 14px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #5a67ff;
+  color: white;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.buttons button:active,
+.check-btn:active {
+  opacity: 0.85;
+}
+
+    .vraag-box {
+      margin-top: 20px;
+      display: none;
+      background: rgba(255,255,255,0.1);
+      padding: 16px;
+      border-radius: 12px;
+      max-width: 420px;
+      margin-left: auto;
+      margin-right: auto;
+      Z-index:1;
+      position: relative;
+    }
+
+    .vraag-foto {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 10px;
+      margin: 10px auto;
+      display: none;
+    }
+
+    input {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      width: 90%;
+      margin-top: 10px;
+      font-size: 1rem;
+    }
+
+.check-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: #2ecc71;
+  font-size: 1rem;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+    .feedback {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .mystery {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #ffd166;
+      word-wrap: break-word;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🕵️ Escape room</h1>
+  <p>Kies een vraag en ontdek de geheime zin</p>
+
+  <div class="buttons">
+    <button data-vraag="1">Vraag 1</button>
+    <button data-vraag="2">Vraag 2</button>
+    <button data-vraag="3">Vraag 3</button>
+    <button data-vraag="4">Vraag 4</button>
+    <button data-vraag="5">Vraag 5</button>
+  </div>
+
+  <div class="vraag-box" id="vraagBox">
+    <h2 id="vraagTitel"></h2>
+    <img id="vraagFoto" class="vraag-foto" src="" alt="Vraag afbeelding">
+    <input type="text" id="antwoordInput" placeholder="Typ je antwoord..." />
+    <button class="check-btn" onclick="checkAntwoord()">Check antwoord</button>
+    <div class="feedback" id="feedback"></div>
+  </div>
+
+  <div class="mystery">
+    Mystery zin: <span id="mysteryZin">_____ _____ _____ _____ _____</span>
+  </div>
+
+  <script>
+    const vragen = {
+      1: { juist: "test", clue: "Wanneer", foto: "img/vraag1.jpg" },
+      2: { juist: "test", clue: "begon", foto: "img/vraag2.jpg" },
+      3: { juist: "test", clue: "de", foto: "img/vraag3.jpg" },
+      4: { juist: "test", clue: "tweede", foto: "img/vraag4.jpg" },
+      5: { juist: "test", clue: "wereldoorlog.", foto: "img/vraag5.jpg" }
+    };
+
+    document.querySelectorAll(".buttons button").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const nummer = btn.dataset.vraag;
+        openVraag(Number(nummer));
+      });
+    });
+
+
+    let huidigeVraag = null;
+    let clues = ["_____", "_____", "_____", "_____", "_____"];
+
+    function openVraag(nummer) {
+      huidigeVraag = nummer;
+      document.getElementById("vraagTitel").innerText = "Vraag " + nummer;
+      document.getElementById("vraagBox").style.display = "block";
+      document.getElementById("feedback").innerText = "";
+      document.getElementById("antwoordInput").value = "";
+
+      const fotoElement = document.getElementById("vraagFoto");
+      fotoElement.src = vragen[nummer].foto;
+      fotoElement.style.display = "block";
+    }
+
+    function checkAntwoord() {
+      const input = document.getElementById("antwoordInput").value.toLowerCase().trim();
+      const juisteAntwoord = vragen[huidigeVraag].juist;
+      const clue = vragen[huidigeVraag].clue;
+
+      if (input === juisteAntwoord) {
+        clues[huidigeVraag - 1] = clue;
+        document.getElementById("feedback").innerText = "✅ Goed! Woord verdiend!";
+        document.getElementById("feedback").style.color = "#2ecc71";
+        updateMystery();
+      } else {
+        document.getElementById("feedback").innerText = "❌ Fout antwoord, probeer opnieuw!";
+        document.getElementById("feedback").style.color = "#ff6b6b";
+      }
+    }
+
+    function updateMystery() {
+      document.getElementById("mysteryZin").innerText = clues.join(" ");
+    }
+  </script>
+
+</body>
+</html>

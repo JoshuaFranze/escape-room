@@ -20,39 +20,39 @@
       font-size: 1.8rem;
     }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
 
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  z-index: 2;
-  position: relative; 
-}
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      z-index: 2;
+      position: relative; 
+    }
 
-.buttons button {
-  flex: 1 1 40%;
-  max-width: 160px;
-  padding: 14px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #5a67ff;
-  color: white;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
+    .buttons button {
+      flex: 1 1 40%;
+      max-width: 160px;
+      padding: 14px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      background: #5a67ff;
+      color: white;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-.buttons button:active,
-.check-btn:active {
-  opacity: 0.85;
-}
+    .buttons button:active,
+    .check-btn:active {
+      opacity: 0.85;
+    }
 
     .vraag-box {
       margin-top: 20px;
@@ -63,7 +63,7 @@
       max-width: 420px;
       margin-left: auto;
       margin-right: auto;
-      Z-index:1;
+      z-index:1;
       position: relative;
     }
 
@@ -84,19 +84,18 @@
       font-size: 1rem;
     }
 
-.check-btn {
-  margin-top: 10px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #2ecc71;
-  font-size: 1rem;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
+    .check-btn {
+      margin-top: 10px;
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #2ecc71;
+      font-size: 1rem;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
 
     .feedback {
       margin-top: 10px;
@@ -138,11 +137,11 @@
 
   <script>
     const vragen = {
-      1: { juist: "test", clue: "Wanneer", foto: "img/vraag1.jpg" },
-      2: { juist: "test", clue: "begon", foto: "img/vraag2.jpg" },
-      3: { juist: "test", clue: "de", foto: "img/vraag3.jpg" },
-      4: { juist: "test", clue: "tweede", foto: "img/vraag4.jpg" },
-      5: { juist: "test", clue: "wereldoorlog.", foto: "img/vraag5.jpg" }
+      1: { juist: "test", clue: "Wanneer", foto: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEWZmZn0W4T/AAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4sAAQ6Nz6wAAAAASUVORK5CYII=" },
+      2: { juist: "test", clue: "begon", foto: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEWZmZn0W4T/AAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4sAAQ6Nz6wAAAAASUVORK5CYII=" },
+      3: { juist: "test", clue: "de", foto: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEWZmZn0W4T/AAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4sAAQ6Nz6wAAAAASUVORK5CYII=" },
+      4: { juist: "test", clue: "tweede", foto: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEWZmZn0W4T/AAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4sAAQ6Nz6wAAAAASUVORK5CYII=" },
+      5: { juist: "test", clue: "wereldoorlog.", foto: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAMAAACahl6sAAAAA1BMVEWZmZn0W4T/AAAASElEQVR4nO3BMQEAAADCoPVPbQ0PoAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwG4sAAQ6Nz6wAAAAASUVORK5CYII=" }
     };
 
     document.querySelectorAll(".buttons button").forEach(btn => {
@@ -151,7 +150,6 @@
         openVraag(Number(nummer));
       });
     });
-
 
     let huidigeVraag = null;
     let clues = ["_____", "_____", "_____", "_____", "_____"];

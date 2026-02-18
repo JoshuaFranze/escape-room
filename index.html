@@ -8,107 +8,54 @@
     body {
       font-family: Arial, sans-serif;
       background: linear-gradient(135deg, #1e1e2f, #2a2a40);
-      color: white;
-      text-align: center;
-      padding: 20px;
-      margin: 0;
-      min-height: 100vh;
+      color: white; text-align: center; padding: 20px; margin: 0; min-height: 100vh;
     }
+    h1 { margin-bottom: 10px; font-size: 1.8rem; }
+    *, *::before, *::after { box-sizing: border-box; }
 
-    h1 {
-      margin-bottom: 10px;
-      font-size: 1.8rem;
+    .buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+    .buttons button {
+      flex: 1 1 40%; max-width: 160px; padding: 14px; font-size: 1rem;
+      border: none; border-radius: 10px; cursor: pointer; background: #5a67ff; color: white;
+      touch-action: manipulation;
     }
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-.buttons {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  z-index: 2;
-  position: relative; 
-}
-
-.buttons button {
-  flex: 1 1 40%;
-  max-width: 160px;
-  padding: 14px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #5a67ff;
-  color: white;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-.buttons button:active,
-.check-btn:active {
-  opacity: 0.85;
-}
 
     .vraag-box {
-      margin-top: 20px;
-      display: none;
-      background: rgba(255,255,255,0.1);
-      padding: 16px;
-      border-radius: 12px;
-      max-width: 420px;
-      margin-left: auto;
-      margin-right: auto;
-      Z-index:1;
-      position: relative;
+      margin-top: 20px; display: none; background: rgba(255,255,255,0.1);
+      padding: 16px; border-radius: 12px; max-width: 560px; margin-inline: auto;
+    }
+    .vraag-foto { width: 100%; max-width: 280px; border-radius: 10px; margin: 10px auto; display: none; }
+
+    /* Drag & drop */
+    .drag-area { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+    .dropzone {
+      min-height: 140px; padding: 8px; border-radius: 10px;
+      border: 2px dashed rgba(255,255,255,0.4);
+      background: rgba(0,0,0,0.2);
+    }
+    .dropzone h3 { margin: 4px 0 8px; font-size: 1rem; }
+    .cards { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 10px; }
+    .card {
+      background: #ffd166; color: #1e1e2f; padding: 10px; border-radius: 10px;
+      font-weight: bold; max-width: 220px; cursor: grab; touch-action: none;
+      user-select: none;
+    }
+    .card.dragging { opacity: 0.6; }
+
+    .keuze { display: none; margin-top: 10px; }
+    .keuze button {
+      margin: 6px; padding: 10px 14px; border-radius: 8px; border: none;
+      cursor: pointer; background: #5a67ff; color: white; font-weight: bold;
     }
 
-    .vraag-foto {
-      width: 100%;
-      max-width: 300px;
-      border-radius: 10px;
-      margin: 10px auto;
-      display: none;
+    .check-btn {
+      margin-top: 10px; width: 100%; padding: 12px; border-radius: 8px;
+      border: none; background: #2ecc71; font-size: 1rem; cursor: pointer;
+      touch-action: manipulation;
     }
 
-    input {
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      width: 90%;
-      margin-top: 10px;
-      font-size: 1rem;
-    }
-
-.check-btn {
-  margin-top: 10px;
-  width: 100%;
-  padding: 12px;
-  border-radius: 8px;
-  border: none;
-  background: #2ecc71;
-  font-size: 1rem;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-
-
-    .feedback {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    .mystery {
-      margin-top: 20px;
-      font-size: 1.1rem;
-      color: #ffd166;
-      word-wrap: break-word;
-    }
+    .feedback { margin-top: 10px; font-weight: bold; }
+    .mystery { margin-top: 20px; font-size: 1.1rem; color: #ffd166; word-wrap: break-word; }
   </style>
 </head>
 <body>
@@ -117,7 +64,7 @@
   <p>Kies een vraag en ontdek de geheime zin</p>
 
   <div class="buttons">
-    <button data-vraag="1">Vraag 1</button>
+    <button data-vraag="1">Vraag 1 (Napoleon)</button>
     <button data-vraag="2">Vraag 2</button>
     <button data-vraag="3">Vraag 3</button>
     <button data-vraag="4">Vraag 4</button>
@@ -127,8 +74,41 @@
   <div class="vraag-box" id="vraagBox">
     <h2 id="vraagTitel"></h2>
     <img id="vraagFoto" class="vraag-foto" src="" alt="Vraag afbeelding">
+
+    <!-- Napoleon sleep-activiteit -->
+    <div id="napoleonActiviteit" style="display:none;">
+      <p><strong>Sleep de kaartjes naar de juiste plek:</strong></p>
+
+      <div class="drag-area">
+        <div class="dropzone" id="verlichtingZone" data-zone="verlichting">
+          <h3>🟢 Verlichte ideeën</h3>
+        </div>
+        <div class="dropzone" id="machtZone" data-zone="macht">
+          <h3>🔴 De baas willen zijn</h3>
+        </div>
+      </div>
+
+      <div class="cards" id="cards">
+        <div class="card" data-correct="verlichting">Zelfde regels voor iedereen</div>
+        <div class="card" data-correct="macht">Zichzelf tot keizer kronen</div>
+        <div class="card" data-correct="macht">Niet iedereen mocht hem bekritiseren</div>
+        <div class="card" data-correct="verlichting">Orde met vaste regels en bestuur</div>
+      </div>
+
+      <button class="check-btn" onclick="checkDrag()">Controleer</button>
+
+      <div class="keuze" id="napoleonKeuze">
+        <p><strong>Wat was Napoleon vooral?</strong></p>
+        <button onclick="kiesNapoleon('A')">A. Alleen maar eerlijk</button>
+        <button onclick="kiesNapoleon('B')">B. Alleen maar streng</button>
+        <button onclick="kiesNapoleon('C')">C. Een mix van eerlijke ideeën én veel macht</button>
+      </div>
+    </div>
+
+    <!-- Standaard vraag -->
     <input type="text" id="antwoordInput" placeholder="Typ je antwoord..." />
-    <button class="check-btn" onclick="checkAntwoord()">Check antwoord</button>
+    <button class="check-btn" id="checkBtn" onclick="checkAntwoord()">Check antwoord</button>
+
     <div class="feedback" id="feedback"></div>
   </div>
 
@@ -138,34 +118,98 @@
 
   <script>
     const vragen = {
-      1: { juist: "test", clue: "Wanneer", foto: "img/vraag1.jpg" },
+      1: { juist: null, clue: "napoleon", foto: "img/napoleon.jpg" },
       2: { juist: "test", clue: "begon", foto: "img/vraag2.jpg" },
       3: { juist: "test", clue: "de", foto: "img/vraag3.jpg" },
       4: { juist: "test", clue: "tweede", foto: "img/vraag4.jpg" },
       5: { juist: "test", clue: "wereldoorlog.", foto: "img/vraag5.jpg" }
     };
 
-    document.querySelectorAll(".buttons button").forEach(btn => {
-      btn.addEventListener("click", () => {
-        const nummer = btn.dataset.vraag;
-        openVraag(Number(nummer));
-      });
-    });
-
-
     let huidigeVraag = null;
     let clues = ["_____", "_____", "_____", "_____", "_____"];
+    let dragged = null;
+
+    document.querySelectorAll(".buttons button").forEach(btn => {
+      btn.addEventListener("click", () => openVraag(Number(btn.dataset.vraag)));
+    });
 
     function openVraag(nummer) {
       huidigeVraag = nummer;
       document.getElementById("vraagTitel").innerText = "Vraag " + nummer;
       document.getElementById("vraagBox").style.display = "block";
       document.getElementById("feedback").innerText = "";
-      document.getElementById("antwoordInput").value = "";
 
       const fotoElement = document.getElementById("vraagFoto");
-      fotoElement.src = vragen[nummer].foto;
-      fotoElement.style.display = "block";
+      fotoElement.src = vragen[nummer].foto || "";
+      fotoElement.style.display = vragen[nummer].foto ? "block" : "none";
+
+      const isNapoleon = nummer === 1;
+      document.getElementById("napoleonActiviteit").style.display = isNapoleon ? "block" : "none";
+      document.getElementById("antwoordInput").style.display = isNapoleon ? "none" : "block";
+      document.getElementById("checkBtn").style.display = isNapoleon ? "none" : "block";
+      document.getElementById("napoleonKeuze").style.display = "none";
+
+      // reset cards back to deck
+      const cards = document.getElementById("cards");
+      document.querySelectorAll(".card").forEach(card => cards.appendChild(card));
+    }
+
+    // Pointer events drag & drop (mobile friendly)
+    document.querySelectorAll(".card").forEach(card => {
+      card.addEventListener("pointerdown", e => {
+        dragged = card;
+        card.setPointerCapture(e.pointerId);
+        card.classList.add("dragging");
+      });
+      card.addEventListener("pointerup", e => {
+        if (!dragged) return;
+        const zones = document.querySelectorAll(".dropzone");
+        let dropped = false;
+        zones.forEach(zone => {
+          const rect = zone.getBoundingClientRect();
+          if (e.clientX >= rect.left && e.clientX <= rect.right &&
+              e.clientY >= rect.top && e.clientY <= rect.bottom) {
+            zone.appendChild(dragged);
+            dropped = true;
+          }
+        });
+        dragged.classList.remove("dragging");
+        dragged = null;
+      });
+    });
+
+    function checkDrag() {
+      const zones = document.querySelectorAll(".dropzone");
+      let goed = true;
+
+      zones.forEach(zone => {
+        const zoneType = zone.dataset.zone;
+        zone.querySelectorAll(".card").forEach(card => {
+          if (card.dataset.correct !== zoneType) goed = false;
+        });
+      });
+
+      const totalPlaced = document.querySelectorAll(".dropzone .card").length;
+      if (goed && totalPlaced === 4) {
+        document.getElementById("feedback").innerText = "✅ Goed gesleept! Kies nu wat het beste past.";
+        document.getElementById("feedback").style.color = "#2ecc71";
+        document.getElementById("napoleonKeuze").style.display = "block";
+      } else {
+        document.getElementById("feedback").innerText = "❌ Nog niet goed. Sleep de kaartjes opnieuw.";
+        document.getElementById("feedback").style.color = "#ff6b6b";
+      }
+    }
+
+    function kiesNapoleon(keuze) {
+      if (keuze === 'C') {
+        clues[0] = vragen[1].clue;
+        document.getElementById("feedback").innerText = "🎉 Juist! Napoleon was een mix van eerlijke ideeën én veel macht. Woord verdiend!";
+        document.getElementById("feedback").style.color = "#2ecc71";
+        updateMystery();
+      } else {
+        document.getElementById("feedback").innerText = "❌ Niet helemaal. Denk aan eerlijke regels én dat hij keizer werd.";
+        document.getElementById("feedback").style.color = "#ff6b6b";
+      }
     }
 
     function checkAntwoord() {

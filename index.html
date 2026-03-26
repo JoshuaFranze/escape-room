@@ -9,67 +9,57 @@
     --primary: #2980b9; --secondary: #e74c3c; --success: #27ae60; --dark: #2c3e50; --gray: #dfe6e9;
   }
   
-  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f39c12; margin: 0; padding: 10px; color: var(--dark); touch-action: manipulation; }
-  .container { max-width: 900px; margin: 0 auto; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
-  h1, h2 { text-align: center; margin-top: 0; font-size: 1.5rem; }
+  body { font-family: 'Segoe UI', Tahoma, sans-serif; background: #f39c12; margin: 0; padding: 20px; color: var(--dark); touch-action: manipulation; }
+  .container { max-width: 900px; margin: 0 auto; background: white; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+  h1, h2 { text-align: center; margin-top: 0; }
   .section { display: none; animation: fadeIn 0.4s; }
   .active { display: block; }
   @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
   /* --- KAART OPDRACHT --- */
   .map-container { 
-    position: relative; 
-    width: 100%; 
-    max-width: 450px; 
-    aspect-ratio: 450 / 550; /* Zorgt dat de verhouding altijd klopt */
-    margin: 20px auto;
+    position: relative; width: 100%; max-width: 450px; aspect-ratio: 450 / 550; margin: 20px auto;
     background: url('img/kaart-vkn.jpg') no-repeat center/contain;
     background-color: #dcf1f9; border: 4px solid var(--dark); border-radius: 12px;
   }
-
-  /* De vakjes op de kaart (Slepen op desktop, Dropdown op mobiel) */
-  .map-slot-box { 
-    position: absolute; 
-    width: 28%; /* Relatief aan de kaartbreedte */
-    height: 8%; 
-    display: flex; align-items: center; justify-content: center;
-  }
-
-  /* Posities in procenten zodat ze altijd op de juiste plek op de kaart staan */
+  .map-slot-box { position: absolute; width: 30%; height: 9%; display: flex; align-items: center; justify-content: center; }
   #pos-Nederland { top: 25%; left: 36%; }
   #pos-Belgie { top: 60%; left: 15%; }
   #pos-Luxemburg { top: 78%; left: 55%; }
 
-  .map-select { 
-    width: 100%; height: 100%; border-radius: 5px; border: 2px solid var(--primary); 
-    font-size: 10px; background: rgba(255,255,255,0.9); display: none; 
-  }
+  .map-select { width: 100%; height: 100%; border-radius: 8px; border: 2px solid var(--primary); font-size: 12px; background: white; display: none; font-weight: bold; }
 
-  /* --- MEDIA QUERIES --- */
-  @media (max-width: 600px) {
-    .geografisch-slot { display: none !important; } /* Verberg sleepvakjes */
-    .map-select { display: block; } /* Toon dropdowns */
-    .map-bank-wrapper { display: none; } /* Verberg de bank met sleepwoorden */
-    .dropzone-container { flex-direction: column; align-items: center; }
-    .slot { width: 100%; max-width: 280px; }
-  }
-
-  /* --- DRAG & DROP & LABELS --- */
-  .item-bank { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; min-height: 80px; padding: 15px; background: #ecf0f1; border-radius: 12px; border: 2px solid #bdc3c7; }
-  .draggable { padding: 10px 14px; background: var(--primary); color: white; border-radius: 8px; cursor: grab; font-weight: bold; font-size: 13px; box-shadow: 0 4px 0 #1f6391; touch-action: none; }
+  /* --- SLEPEN & VAKJES --- */
+  .item-bank { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; min-height: 80px; padding: 20px; background: #ecf0f1; border-radius: 12px; border: 2px solid #bdc3c7; }
+  .draggable { padding: 12px 18px; background: var(--primary); color: white; border-radius: 8px; cursor: grab; font-weight: bold; font-size: 14px; text-align: center; box-shadow: 0 4px 0 #1f6391; user-select: none; transition: 0.2s; display: flex; align-items: center; justify-content: center; touch-action: none; }
+  .draggable:active { transform: translateY(2px); box-shadow: none; }
   
-  .dropzone-container { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin: 20px 0; }
-  .slot-wrapper { display: flex; flex-direction: column; align-items: center; gap: 5px; width: auto; }
-  .slot-label { font-size: 10px; font-weight: bold; color: var(--primary); text-transform: uppercase; }
-  
-  .slot { width: 140px; min-height: 50px; border: 3px dashed #bdc3c7; border-radius: 10px; background: var(--gray); display: flex; align-items: center; justify-content: center; position: relative; }
+  .dropzone-container { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin: 25px 0; }
+  .slot-wrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+  .slot-label { font-size: 11px; font-weight: bold; color: var(--primary); text-transform: uppercase; letter-spacing: 1px; }
+  .slot { width: 150px; min-height: 55px; border: 3px dashed #bdc3c7; border-radius: 10px; background: var(--gray); display: flex; align-items: center; justify-content: center; transition: 0.3s; }
   .slot.error-highlight { border-color: var(--secondary); background: #ff7675; }
   .slot .draggable { width: 100%; height: 100%; box-shadow: none; }
 
+  /* --- JAARTAL SECTIE (KLUISEFFECT) --- */
+  #year-section { text-align: center; margin-top: 30px; padding: 30px; background: #f8f9fa; border-radius: 15px; border: 4px solid var(--primary); display: none; animation: fadeIn 0.5s; }
+  .year-input { font-size: 40px; width: 180px; text-align: center; border: 4px solid var(--primary); border-radius: 10px; padding: 15px; font-family: 'Courier New', monospace; margin-bottom: 20px; background: white; }
+
+  /* --- MEDIA QUERY MOBIEL --- */
+  @media (max-width: 600px) {
+    .geografisch-slot, #map-bank { display: none !important; }
+    .map-select { display: block; }
+    .map-container { max-width: 320px; }
+    .slot { width: 100%; max-width: 280px; }
+    .dropzone-container { flex-direction: column; align-items: center; }
+  }
+
   /* Knoppen & Overlay */
-  .btn { display: block; margin: 20px auto; padding: 15px 30px; background: var(--primary); color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; }
+  .btn { display: block; margin: 20px auto; padding: 15px 40px; background: var(--primary); color: white; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 0 #1f6391; }
+  .btn:active { transform: translateY(2px); box-shadow: none; }
+
   #overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(44, 62, 80, 0.98); color: white; display: none; flex-direction: column; align-items: center; justify-content: center; z-index: 999; text-align: center; padding: 20px; }
-  #timer-container { width: 250px; height: 12px; background: white; border-radius: 10px; margin-top: 20px; overflow: hidden; }
+  #timer-container { width: 300px; height: 15px; background: white; border-radius: 10px; margin-top: 20px; overflow: hidden; }
   #timer-fill { height: 100%; background: var(--secondary); width: 0%; }
 </style>
 </head>
@@ -109,8 +99,7 @@
         </select>
       </div>
     </div>
-
-    <div class="map-bank-wrapper" id="map-bank">
+    <div id="map-bank">
       <div class="item-bank">
         <div class="draggable" draggable="true" data-value="Noordelijke Nederlanden">Noordelijke Nederlanden</div>
         <div class="draggable" draggable="true" data-value="Zuidelijke Nederlanden">Zuidelijke Nederlanden</div>
@@ -132,24 +121,30 @@
     <div class="item-bank" id="w-bank"></div>
     <div class="dropzone-container" id="w-zones"></div>
     <button class="btn" id="btn-sentence" onclick="checkSentence()">Zin Controleren ✔️</button>
-    <div id="year-section" style="display:none; text-align:center;">
-      <input type="number" id="year-input" style="font-size:24px; width:120px; text-align:center; border: 3px solid var(--primary); border-radius:10px;" placeholder="????">
+    
+    <div id="year-section">
+      <h3>🔓 De vraag is ontgrendeld!</h3>
+      <input type="number" id="year-input" class="year-input" placeholder="????">
       <button class="btn" onclick="checkFinalCode()">Code Invoeren 🔓</button>
     </div>
   </div>
 
   <div id="section-end" class="section" style="text-align:center">
-      <h1 style="color: var(--success);">GEFELICITEERD! 🔓</h1>
-      <div style="background: #f1f2f6; padding: 20px; border-radius: 20px; border: 5px solid var(--success);">
-        <div style="font-size: 50px; font-weight: bold;">1815</div>
-        <p style="font-weight: bold; color: var(--secondary);">🛑 STEEK JE VINGER IN DE LUCHT! ☝️</p>
+      <h1 style="color: var(--success); font-size: 3rem;">GEFELICITEERD! 🔓</h1>
+      <div style="background: #f1f2f6; padding: 30px; border-radius: 20px; border: 5px solid var(--success); box-shadow: inset 0 0 20px rgba(0,0,0,0.1);">
+        <p style="font-size: 1.5rem; margin-bottom: 10px;">De kluiscode is:</p>
+        <div style="font-size: 80px; font-weight: bold; color: var(--dark); letter-spacing: 10px;">1815</div>
+        <hr style="border: 1px solid #ccc; margin: 20px 0;">
+        <p style="font-size: 1.4rem; font-weight: bold; color: var(--secondary); background: white; padding: 20px; border-radius: 10px; border: 2px solid var(--secondary);">
+          🛑 STEEK ZO SNEL MOGELIJK ALLEMAAL JE VINGER IN DE LUCHT! ☝️
+        </p>
       </div>
   </div>
 </div>
 
 <div id="overlay">
-  <h2 id="overlay-head">Niet goed... ❌</h2>
-  <p id="overlay-msg">Wacht heel even.</p>
+  <h2 id="overlay-head">Niet helemaal goed... ❌</h2>
+  <p id="overlay-msg">Blijf proberen! Je kunt over een momentje weer verder.</p>
   <div id="timer-container"><div id="timer-fill"></div></div>
 </div>
 
@@ -175,7 +170,6 @@
         draggedItem = null;
       });
     });
-
     document.querySelectorAll('.slot, .item-bank').forEach(zone => {
       zone.addEventListener('dragover', e => e.preventDefault());
       zone.addEventListener('drop', function(e) { e.preventDefault(); handleDrop(this); });
@@ -187,9 +181,11 @@
     if (zone.classList.contains('slot')) {
       const existing = Array.from(zone.children).find(c => c.classList.contains('draggable'));
       if (existing) {
-        const bankId = zone.closest('.section').id === "section-timeline" ? "tl-bank" : "w-bank";
+        const sectionId = zone.closest('.section').id;
+        const bankId = sectionId === "section-timeline" ? "tl-bank" : "w-bank";
         document.getElementById(bankId).appendChild(existing);
       }
+      if(zone.classList.contains('map-dropzone')) zone.innerHTML = "";
       zone.appendChild(draggedItem);
       zone.classList.remove('error-highlight');
     } else {
@@ -206,14 +202,13 @@
     tlCorrect.forEach((_, i) => {
       tlZ.innerHTML += `<div class="slot-wrapper"><span class="slot-label">Stap ${i+1}</span><div class="slot"></div></div>`;
     });
-
     const wB = document.getElementById('w-bank');
     [...sentCorrect, ...fakes].sort(()=>Math.random()-0.5).forEach(w => {
       wB.innerHTML += `<div class="draggable" draggable="true" data-value="${w}">${w}</div>`;
     });
     const wZ = document.getElementById('w-zones');
     sentCorrect.forEach((_, i) => {
-      wZ.innerHTML += `<div class="slot-wrapper"><span class="slot-label">Deel ${i+1}</span><div class="slot" style="min-width:70px;"></div></div>`;
+      wZ.innerHTML += `<div class="slot-wrapper"><span class="slot-label">Deel ${i+1}</span><div class="slot" style="min-width:75px;"></div></div>`;
     });
     initDragDrop();
   }
@@ -265,8 +260,10 @@
     o.style.display = 'flex';
     bar.style.transition = 'none'; bar.style.width = '0%';
     if(fails[type] >= 5) {
-      document.getElementById('overlay-msg').innerText = "De fouten zijn nu gemarkeerd.";
+      document.getElementById('overlay-msg').innerText = "Let op: de rode vakjes kloppen nog niet!";
       elements.forEach(el => el.classList.add('error-highlight'));
+    } else {
+      document.getElementById('overlay-msg').innerText = "Blijf proberen! Je kunt over een momentje weer verder.";
     }
     setTimeout(() => { bar.style.transition = 'width 5s linear'; bar.style.width = '100%'; }, 50);
     setTimeout(() => o.style.display = 'none', 5050);
